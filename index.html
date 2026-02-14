@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kudumbhasree Ecommerce - Women Empowerment Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-p1CmKp9uDm6L1h7nICqE2hQfI2RrM+q+g+Y/4GfXnm1Ea2eSDY5oM+7eFddGv5F0po0j4BJvSlpP5c5Y0GfjKg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navigation Header -->
+    <nav class="bg-gradient-to-r from-green-700 to-green-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl font-bold"><i class="fas fa-leaf"></i></span>
+                <h1 class="text-xl font-bold">Kudumbhasree</h1>
+            </div>
+
+            <div class="hidden md:flex gap-6">
+                <button class="hover:text-yellow-200 transition" onclick="goToPage('home')"><i class="fas fa-home"></i>
+                    Home</button>
+                <button class="hover:text-yellow-200 transition" onclick="goToPage('meetings')"><i
+                        class="fas fa-calendar"></i> Meetings</button>
+                <button id="eventsNavBtn" class="hover:text-yellow-200 transition hidden"
+                    onclick="goToPage('events')"><i class="fas fa-party-popper"></i> Events</button>
+                <!-- <button id="adminDashNavBtn" class="hover:text-yellow-200 transition hidden" onclick="goToPage('seller-dashboard')"><i class="fas fa-gear"></i> Admin</button> -->
+                <span id="cartBadge"
+                    class="bg-yellow-400 text-green-700 px-3 py-1 rounded-full font-bold cursor-pointer hover:bg-yellow-300"
+                    onclick="goToPage('cart')">
+                    <i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span>
+                </span>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span id="userName" class="text-sm"></span>
+                <div class="relative group">
+                    <button class="bg-green-500 px-4 py-2 rounded hover:bg-green-400 transition"><i
+                            class="fas fa-user"></i> Menu</button>
+                    <div
+                        class="hidden group-hover:block absolute right-0 bg-white text-gray-800 rounded mt-2 w-48 shadow-lg">
+                        <button id="sellerDashBtn" class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                            onclick="goToPage('seller-dashboard')" style="display:none;">
+                            <i class="fas fa-gear"></i> Admin Dashboard
+                        </button>
+                        <button class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                            onclick="goToPage('profile')">
+                            <i class="fas fa-user"></i> Profile
+                        </button>
+                        <button class="block w-full text-left px-4 py-2 hover:bg-gray-100 border-t"
+                            onclick="handleLogout()">
+                            🚪 Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Page -->
+    <div id="page-login"
+        class="page min-h-screen bg-gradient-to-br from-green-100 to-yellow-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-8">
+            <div class="text-center mb-8">
+                <div class="text-5xl mb-4"><i class="fas fa-leaf"></i></div>
+                <h2 class="text-2xl font-bold text-green-700">Kudumbhasree</h2>
+                <p class="text-gray-600 mt-2">Women Empowerment Platform</p>
+            </div>
+
+            <div id="authOptions" class="space-y-3 mb-6">
+                <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                    onclick="showAuthForm('login-buyer')">
+                    <i class="fas fa-shopping-bag"></i> Login as Buyer
+                </button>
+                <button
+                    class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
+                    onclick="showAuthForm('login-admin')">
+                    <i class="fas fa-user-tie"></i> Login as Admin
+                </button>
+                <button class="w-full text-sm text-green-600 hover:text-green-700 font-semibold"
+                    onclick="showAuthForm('signup')">
+                    Don't have an account? Sign Up
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="hidden space-y-4">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Login</h3>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="loginEmail"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="your@email.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="loginPassword"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="••••••••">
+                </div>
+                <input type="hidden" id="loginRole" value="">
+                <button type="button"
+                    class="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition"
+                    onclick="doLogin()">
+                    Login
+                </button>
+                <button type="button"
+                    class="w-full bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-400 transition"
+                    onclick="backToAuth()">
+                    Back
+                </button>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signupForm" class="hidden space-y-4">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Create Account</h3>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="signupName"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="Your Name">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="signupEmail"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="your@email.com">
+                </div>
+                <div class="space-y-2">
+                    <p class="text-sm font-medium text-gray-700">Account Type:</p>
+                    <label class="flex items-center gap-2">
+                        <input type="radio" name="role" value="buyer" checked onchange="toggleRegionField()">
+                        <span><i class="fas fa-shopping-bag"></i> Buyer</span>
+                    </label>
+                </div>
+                <div id="regionField" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Region</label>
+                    <select id="signupRegion"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="Kottayam">Kottayam</option>
+                        <option value="Alappuzha">Alappuzha</option>
+                        <option value="Kochi">Kochi</option>
+                        <option value="Thrissur">Thrissur</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="signupPassword"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="••••••••">
+                </div>
+                <button type="button"
+                    class="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition"
+                    onclick="doSignup()">
+                    Create Account
+                </button>
+                <button type="button"
+                    class="w-full bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-400 transition"
+                    onclick="backToAuth()">
+                    Back
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <div id="page-home" class="page hidden min-h-screen py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="bg-gradient-to-r from-green-600 to-yellow-400 text-white rounded-lg p-8 mb-8 shadow-lg">
+                <h2 class="text-3xl font-bold mb-2">Welcome to Kudumbhasree Marketplace! <i
+                        class="fas fa-party-popper"></i></h2>
+                <p class="text-lg">Buy authentic handmade and local products directly from women entrepreneurs.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" id="searchInput" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg"
+                        placeholder="Search products..." onkeyup="searchProducts()">
+                    <select id="categoryFilter" class="px-4 py-2 border border-gray-300 rounded-lg"
+                        onchange="filterProducts()">
+                        <option value="">All Categories</option>
+                        <option value="Textiles"><i class="fas fa-shirt"></i> Textiles</option>
+                        <option value="Handicrafts"><i class="fas fa-palette"></i> Handicrafts</option>
+                        <option value="Food"><i class="fas fa-pepper-hot"></i> Food</option>
+                        <option value="Home Decor"><i class="fas fa-leaf"></i> Home Decor</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Products loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Page -->
+    <div id="page-product-detail" class="page hidden min-h-screen py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <button class="text-green-600 font-semibold mb-4" onclick="goToPage('home')">← Back</button>
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div id="detailImageContainer" class="flex items-center justify-center bg-gray-100 rounded-lg p-8">
+                        <span id="detailImage" class="text-8xl">📦</span>
+                    </div>
+                    <div>
+                        <h2 id="detailName" class="text-3xl font-bold text-gray-800 mb-2"></h2>
+                        <p id="detailCategory" class="text-green-600 font-semibold mb-4"></p>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span id="detailRating"><i class="fas fa-star"></i> 5.0</span>
+                            <span id="detailReviews" class="text-gray-600">(0 reviews)</span>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-gray-600 text-sm">Price</p>
+                            <p id="detailPrice" class="text-3xl font-bold text-green-600">₹0</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-lg p-4 mb-6">
+                            <p class="text-sm text-gray-600 mb-1">Sold by</p>
+                            <p id="detailSeller" class="font-semibold text-lg"></p>
+                            <p id="detailSellerRegion" class="text-sm text-gray-600"></p>
+                        </div>
+                        <div class="mb-6">
+                            <p id="detailStock" class="text-sm font-semibold text-green-600">✅ In Stock</p>
+                        </div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <label class="font-semibold">Quantity:</label>
+                            <div class="flex items-center border border-gray-300 rounded-lg">
+                                <button class="px-3 py-2" onclick="decreaseQty()"><i class="fas fa-minus"></i></button>
+                                <input type="number" id="detailQty" class="w-16 text-center py-2" value="1" min="1"
+                                    readonly>
+                                <button class="px-3 py-2" onclick="increaseQty()"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 mb-6">
+                            <button id="addToCartBtn"
+                                class="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700">Add
+                                to Cart</button>
+                            <button id="heartBtn"
+                                class="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg font-semibold hover:bg-gray-300"><i
+                                    class="far fa-heart"></i></button>
+                        </div>
+                        <div class="border-t pt-6">
+                            <h3 class="font-bold text-lg mb-3">📝 Description</h3>
+                            <p id="detailDescription" class="text-gray-700"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Page -->
+    <div id="page-cart" class="page hidden min-h-screen py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-6"><i class="fas fa-shopping-cart"></i> Shopping Cart</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2">
+                    <div id="cartItemsContainer" class="bg-white rounded-lg shadow p-6"></div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6 h-fit">
+                    <h3 class="text-xl font-bold mb-4">Order Summary</h3>
+                    <div class="space-y-3 mb-6 pb-6 border-b">
+                        <div class="flex justify-between">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">₹0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Shipping:</span>
+                            <span class="text-green-600">FREE</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Tax (5%):</span>
+                            <span id="tax">₹0</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between mb-6 text-lg font-bold">
+                        <span>Total:</span>
+                        <span id="cartTotal" class="text-green-600">₹0</span>
+                    </div>
+                    <button class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 mb-3"
+                        onclick="goToPage('checkout')">
+                        Proceed to Checkout
+                    </button>
+                    <button class="w-full bg-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-400"
+                        onclick="goToPage('home')">
+                        Continue Shopping
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Page -->
+    <div id="page-checkout" class="page hidden min-h-screen py-8 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-6">Checkout</h2>
+
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <h3 class="text-xl font-bold mb-4">Shipping Address</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="shipName" class="col-span-2 px-4 py-2 border border-gray-300 rounded-lg"
+                        placeholder="Full Name">
+                    <input type="email" id="shipEmail" class="col-span-2 px-4 py-2 border border-gray-300 rounded-lg"
+                        placeholder="Email">
+                    <input type="tel" id="shipPhone" class="col-span-2 px-4 py-2 border border-gray-300 rounded-lg"
+                        placeholder="Phone">
+                    <input type="text" id="shipStreet" class="col-span-2 px-4 py-2 border border-gray-300 rounded-lg"
+                        placeholder="Street Address">
+                    <input type="text" id="shipCity" class="px-4 py-2 border border-gray-300 rounded-lg"
+                        placeholder="City">
+                    <input type="text" id="shipZip" class="px-4 py-2 border border-gray-300 rounded-lg"
+                        placeholder="Zip Code">
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <h3 class="text-xl font-bold mb-4">Payment Method</h3>
+                <div class="space-y-3">
+                    <label class="flex items-center gap-3 p-3 border border-green-300 rounded-lg cursor-pointer">
+                        <input type="radio" name="payment" value="cash" checked>
+                        <span><i class="fas fa-credit-card"></i> Cash on Delivery</span>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer">
+                        <input type="radio" name="payment" value="upi">
+                        <span><i class="fas fa-mobile"></i> UPI Payment</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <h3 class="text-xl font-bold mb-4">Order Summary</h3>
+                <div id="checkoutItems" class="space-y-3 mb-4 pb-4 border-b"></div>
+                <div class="flex justify-between text-lg font-bold">
+                    <span>Total:</span>
+                    <span id="checkoutTotal" class="text-green-600">₹0</span>
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <button class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-400"
+                    onclick="goToPage('cart')">
+                    Back to Cart
+                </button>
+                <button class="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700"
+                    onclick="completeOrder()">
+                    Complete Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seller Dashboard -->
+    <div id="page-seller-dashboard" class="page hidden min-h-screen py-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold"><i class="fas fa-store"></i> Seller Dashboard</h2>
+                <div class="flex gap-3">
+                    <button class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700"
+                        onclick="goToPage('add-product')">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Total Products</p>
+                    <p id="dashTotalProducts" class="text-3xl font-bold text-green-600">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Total Sales</p>
+                    <p id="dashTotalSales" class="text-3xl font-bold text-blue-600">₹0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Upcoming Meetings</p>
+                    <p id="dashMeetings" class="text-3xl font-bold text-amber-600">0</p>
+                </div>
+            </div>
+
+            <!-- Products Management Section -->
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <div class="p-6 border-b bg-gray-50">
+                    <h3 class="text-xl font-bold"><i class="fas fa-box"></i> Products</h3>
+                    <p class="text-sm text-gray-600 mt-1">Your Products</p>
+                </div>
+                <div id="dashProductsList" class="divide-y"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="page-admin-dashboard" class="page hidden min-h-screen py-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold"><i class="fas fa-gear"></i> Admin Dashboard</h2>
+                <button id="addEventBtnAdmin"
+                    class="bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700"
+                    onclick="goToPage('add-event')">
+                    <i class="fas fa-plus"></i> Add Event
+                </button>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Total Products</p>
+                    <p id="adminDashTotalProducts" class="text-3xl font-bold text-green-600">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Active Sellers</p>
+                    <p id="adminDashActiveSellers" class="text-3xl font-bold text-blue-600">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Events Conducted</p>
+                    <p id="adminDashTotalEvents" class="text-3xl font-bold text-purple-600">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Total Meetings</p>
+                    <p id="adminDashMeetings" class="text-3xl font-bold text-amber-600">0</p>
+                </div>
+            </div>
+
+            <!-- Products Management Section -->
+            <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
+                <div class="p-6 border-b bg-gray-50">
+                    <h3 class="text-xl font-bold"><i class="fas fa-box"></i> All Products (Marketplace Management)</h3>
+                </div>
+                <div id="adminDashProductsList" class="divide-y"></div>
+            </div>
+
+            <!-- Events Management Section -->
+            <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
+                <div class="p-6 border-b bg-gray-50">
+                    <h3 class="text-xl font-bold"><i class="fas fa-party-popper"></i> Social Events</h3>
+                </div>
+                <div id="adminDashEventsList" class="divide-y"></div>
+            </div>
+
+            <!-- Meetings Management Section -->
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <div class="p-6 border-b bg-gray-50">
+                    <h3 class="text-xl font-bold"><i class="fas fa-calendar"></i> Regional Meetings</h3>
+                </div>
+                <div id="adminDashMeetingsList" class="divide-y"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Page -->
+    <div id="page-add-product" class="page hidden min-h-screen py-8 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4">
+            <button class="text-green-600 font-semibold mb-4" onclick="goToPage('seller-dashboard')">← Back</button>
+            <div class="bg-white rounded-lg shadow p-8">
+                <h2 class="text-2xl font-bold mb-6">Add New Product</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
+                        <input type="text" id="productName" class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                            placeholder="e.g., Kerala Saree">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <select id="productCategory" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                                <option value="">Select</option>
+                                <option value="Textiles">Textiles</option>
+                                <option value="Handicrafts">Handicrafts</option>
+                                <option value="Food">Food</option>
+                                <option value="Home Decor">Home Decor</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Price (₹)</label>
+                            <input type="number" id="productPrice"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="1000" min="1">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+                        <input type="number" id="productQuantity"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="10" min="1">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Product Image (Emoji)</label>
+                        <input type="text" id="productImage" class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                            placeholder="e.g., 🧥" maxlength="2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea id="productDescription" class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                            rows="4" placeholder="Describe your product..."></textarea>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-400"
+                            onclick="goToPage('seller-dashboard')">
+                            Cancel
+                        </button>
+                        <button class="flex-1 bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700"
+                            onclick="saveProduct()">
+                            Save Product
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meetings Page -->
+    <div id="page-meetings" class="page hidden min-h-screen py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold"><i class="fas fa-calendar"></i> Regional Meetings</h2>
+                <button id="addMeetingBtn"
+                    class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 hidden"
+                    onclick="goToPage('add-meeting')">
+                    ➕ Schedule Meeting
+                </button>
+            </div>
+
+            <div class="mb-6">
+                <select id="regionFilter" class="px-4 py-2 border border-gray-300 rounded-lg"
+                    onchange="filterMeetings()">
+                    <option value="">All Regions</option>
+                    <option value="Kottayam">Kottayam</option>
+                    <option value="Alappuzha">Alappuzha</option>
+                    <option value="Kochi">Kochi</option>
+                    <option value="Thrissur">Thrissur</option>
+                </select>
+            </div>
+
+            <div id="meetingsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </div>
+
+    <!-- Add Meeting Page -->
+    <div id="page-add-meeting" class="page hidden min-h-screen py-8 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4">
+            <button class="text-green-600 font-semibold mb-4" onclick="goToPage('meetings')">← Back</button>
+            <div class="bg-white rounded-lg shadow p-8">
+                <h2 class="text-2xl font-bold mb-6">Schedule a Meeting</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Meeting Title</label>
+                        <input type="text" id="meetingTitle" class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                            placeholder="e.g., Product Showcase">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Region</label>
+                            <select id="meetingRegion" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                                <option value="">Select</option>
+                                <option value="Kottayam">Kottayam</option>
+                                <option value="Alappuzha">Alappuzha</option>
+                                <option value="Kochi">Kochi</option>
+                                <option value="Thrissur">Thrissur</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Max Capacity</label>
+                            <input type="number" id="meetingCapacity"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="30" min="5">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                            <input type="date" id="meetingDate"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Time</label>
+                            <input type="time" id="meetingTime"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                        <input type="text" id="meetingLocation"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                            placeholder="e.g., Community Center">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea id="meetingDescription" class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                            rows="4" placeholder="Describe the meeting..."></textarea>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-400"
+                            onclick="goToPage('meetings')">
+                            Cancel
+                        </button>
+                        <button class="flex-1 bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700"
+                            onclick="saveMeeting()">
+                            Schedule
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="page-profile" class="page hidden min-h-screen py-8 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4">
+            <button class="text-green-600 font-semibold mb-4" onclick="goToPage('home')">← Back</button>
+            <div class="bg-white rounded-lg shadow p-8">
+                <h2 class="text-2xl font-bold mb-6"><i class="fas fa-user"></i> User Profile</h2>
+                <div class="grid grid-cols-2 gap-4 mb-8 pb-8 border-b">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Name</p>
+                        <p id="profileName" class="text-lg font-semibold">User Name</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Email</p>
+                        <p id="profileEmail" class="text-lg font-semibold">email@example.com</p>
+                    </div>
+                    <div id="profileRegionDiv">
+                        <p class="text-sm text-gray-600 mb-1">Region</p>
+                        <p id="profileRegion" class="text-lg font-semibold">Region</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Account Type</p>
+                        <p id="profileRole" class="text-lg font-semibold">Role</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">📦 Order History</h3>
+                    <div id="orderHistoryList" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Events Page (Social Events Showcase) -->
+    <div id="page-events" class="page hidden min-h-screen py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-6"><i class="fas fa-party-popper"></i> Kudumbhasree Social Events</h2>
+
+            <div class="bg-blue-50 rounded-lg p-6 mb-8 border-l-4 border-blue-600">
+                <h3 class="text-xl font-bold text-blue-800 mb-2">📢 Community Impact</h3>
+                <p class="text-blue-700">Kudumbhasree regularly conducts social events to empower women, build community
+                    networks, and share knowledge and skills.</p>
+            </div>
+
+            <div id="eventsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <!-- Add Event Page -->
+    <div id="page-add-event" class="page hidden min-h-screen py-8 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4">
+            <button class="text-purple-600 font-semibold mb-4" onclick="goToPage('seller-dashboard')">← Back</button>
+            <div class="bg-white rounded-lg shadow p-8">
+                <h2 class="text-2xl font-bold mb-6"><i class="fas fa-party-popper"></i> Add New Social Event</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Event Title</label>
+                        <input type="text" id="eventTitle" class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                            placeholder="e.g., Women Entrepreneurship Summit">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event Date</label>
+                            <input type="date" id="eventDate"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Attendees</label>
+                            <input type="number" id="eventAttendees"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="50" min="1">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                        <input type="text" id="eventLocation" class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                            placeholder="e.g., Convention Center, Kochi">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Event Type</label>
+                        <select id="eventType" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                            <option value="">Select Type</option>
+                            <option value="Workshop">📚 Workshop</option>
+                            <option value="Training">🎓 Training</option>
+                            <option value="Seminar">🎤 Seminar</option>
+                            <option value="Fair">🎪 Fair</option>
+                            <option value="Campaign">📢 Campaign</option>
+                            <option value="Social Meet">👥 Social Meet</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea id="eventDescription" class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                            rows="4" placeholder="Describe the event and its impact..."></textarea>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-400"
+                            onclick="goToPage('admin-dashboard')">
+                            Cancel
+                        </button>
+                        <button
+                            class="flex-1 bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700"
+                            onclick="saveEvent()">
+                            Add Event
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- All JavaScript here -->
+    <script>
+        // ============================================
+        // DUMMY DATA
+        // ============================================
+        const sellers = [
+            { id: 1, name: 'Asha Kumar', region: 'Kottayam', profileImage: '👩‍🦰', description: 'Textile artisan' },
+            { id: 2, name: 'Deepa Singh', region: 'Alappuzha', profileImage: '👩‍🦱', description: 'Food expert' },
+            { id: 3, name: 'Mina Gupta', region: 'Kochi', profileImage: '👩', description: 'Craft maker' },
+            { id: 4, name: 'Priya Nair', region: 'Thrissur', profileImage: '👩‍🦳', description: 'Weaver' }
+        ];
+
+        let products = [
+            { id: 1, sellerId: 1, name: 'Traditional Kerala Saree', category: 'Textiles', price: 2500, icon: 'fas fa-shirt', image: 'public/saree.jpg', description: 'Authentic handwoven saree with traditional kasavu patterns', quantity: 5, rating: 4.5, reviews: 12 },
+            { id: 2, sellerId: 1, name: 'Embroidered Table Runner', category: 'Handicrafts', price: 800, icon: 'fas fa-sparkles', description: 'Beautifully embroidered table runner with traditional motifs', quantity: 8, rating: 4.8, reviews: 24 },
+            { id: 3, sellerId: 2, name: 'Organic Turmeric Powder', category: 'Food', price: 350, icon: 'fas fa-leaf', image: 'public/turmeric.jpg', description: 'Pure organic turmeric powder from Kerala farms', quantity: 20, rating: 4.9, reviews: 45 },
+            { id: 4, sellerId: 2, name: 'Spice Blend Mix', category: 'Food', price: 450, icon: 'fas fa-pepper-hot', image: 'public/spices-spoons-wooden-table.jpg', description: 'Premium spice blend for traditional Kerala curries', quantity: 15, rating: 4.7, reviews: 31 },
+            { id: 5, sellerId: 3, name: 'Coconut Shell Bowl Set', category: 'Handicrafts', price: 600, icon: 'fas fa-coconut', image: 'public/cocunutbowl.jpg', description: 'Handcrafted decorative bowls from coconut shells', quantity: 10, rating: 4.6, reviews: 18 },
+            { id: 6, sellerId: 3, name: 'Jute Door Mat', category: 'Home Decor', price: 500, icon: 'fas fa-leaf', image: 'public/jute.jpg', description: 'Durable jute door mat with traditional patterns', quantity: 12, rating: 4.4, reviews: 15 },
+            { id: 7, sellerId: 4, name: 'Hand-woven Cushion', category: 'Textiles', price: 350, icon: 'fas fa-chair', description: 'Hand-woven cushion cover in earthy tones', quantity: 18, rating: 4.7, reviews: 22 },
+            { id: 8, sellerId: 4, name: 'Silk Scarf', category: 'Textiles', price: 1200, icon: 'fas fa-vest', description: 'Premium silk scarf with hand-dyed colors', quantity: 7, rating: 4.9, reviews: 38 },
+            { id: 9, sellerId: 1, name: 'Wall Hanging', category: 'Handicrafts', price: 950, icon: 'fas fa-palette', description: 'Intricate wall hanging with Kerala designs', quantity: 6, rating: 4.8, reviews: 28 },
+            { id: 10, sellerId: 2, name: 'Organic Coconut Oil', category: 'Food', price: 550, icon: 'fas fa-coconut', description: 'Cold-pressed coconut oil for cooking', quantity: 25, rating: 4.8, reviews: 52 }
+        ];
+
+        const meetings = [
+            { id: 1, region: 'Kottayam', title: 'Monthly Meet - Textiles', date: '2024-03-10', time: '10:00 AM', location: 'Community Center', organizer: 'Asha Kumar', description: 'Textile showcase', attendees: 12, maxCapacity: 30 },
+            { id: 2, region: 'Alappuzha', title: 'Food Workshop', date: '2024-03-15', time: '2:00 PM', location: 'Town Hall', organizer: 'Deepa Singh', description: 'Food packaging training', attendees: 8, maxCapacity: 20 },
+            { id: 3, region: 'Kochi', title: 'Handicrafts Fair', date: '2024-03-20', time: '9:00 AM', location: 'Convention Center', organizer: 'Mina Gupta', description: 'Two-day fair', attendees: 25, maxCapacity: 50 },
+            { id: 4, region: 'Thrissur', title: 'Weaving Techniques', date: '2024-03-25', time: '11:00 AM', location: 'Crafts Center', organizer: 'Priya Nair', description: 'Discussion on techniques', attendees: 15, maxCapacity: 35 }
+        ];
+
+        let events = [
+            { id: 1, title: 'Women Entrepreneurship Summit', date: '2024-02-15', location: 'Convention Center, Kochi', type: 'Seminar', attendees: 150, description: 'Bringing together innovative women entrepreneurs to share ideas and network. Keynote by leading businesswomen.', icon: 'fas fa-microphone' },
+            { id: 2, title: 'Digital Literacy Training', date: '2024-02-20', location: 'Community Center, Kottayam', type: 'Training', attendees: 75, description: 'Comprehensive training on digital skills and online marketing for women sellers. Free certification included.', icon: 'fas fa-laptop' },
+            { id: 3, title: 'Handcraft Excellence Workshop', date: '2024-03-05', location: 'Crafts Hub, Alappuzha', type: 'Workshop', attendees: 60, description: 'Master craftsmen sharing traditional techniques and modern design innovations in handicrafts.', icon: 'fas fa-palette' },
+            { id: 4, title: 'Annual Women Empowerment Fair', date: '2024-03-10', location: 'Exhibition Ground, Thrissur', type: 'Fair', attendees: 500, description: 'Three-day mega fair showcasing products and achievements of Kudumbhasree members with live performances.', icon: 'fas fa-tent' },
+            { id: 5, title: 'Financial Independence Campaign', date: '2024-03-15', location: 'Town Hall, Ernakulam', type: 'Campaign', attendees: 200, description: 'Campaign promoting financial literacy and banking services for rural women entrepreneurs.', icon: 'fas fa-megaphone' },
+            { id: 6, title: 'Health & Wellness Meet', date: '2024-03-20', location: 'Medical Center, Kochi', type: 'Social Meet', attendees: 100, description: 'Health checkup camps and wellness sessions organized for women entrepreneurs and their families.', icon: 'fas fa-heart-pulse' }
+        ];
+
+        // ============================================
+        // APP STATE
+        // ============================================
+        let currentUser = null;
+        let cart = [];
+        let favorites = [];
+        let orders = [];
+        let currentProductId = null;
+        let editingProductId = null;
+        let editingEventId = null;
+
+        // ============================================
+        // PAGE NAVIGATION
+        // ============================================
+        function goToPage(pageName) {
+            if (!currentUser && pageName !== 'login') {
+                goToPage('login');
+                return;
+            }
+
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+
+            // Show selected page
+            const page = document.getElementById(`page-${pageName}`);
+            if (page) {
+                page.classList.remove('hidden');
+
+                // Call initialization functions
+                if (pageName === 'home') initHome();
+                if (pageName === 'product-detail') initProductDetail();
+                if (pageName === 'cart') initCart();
+                if (pageName === 'checkout') initCheckout();
+                if (pageName === 'seller-dashboard') initSellerDash();
+                if (pageName === 'admin-dashboard') initAdminDash();
+                if (pageName === 'meetings') initMeetings();
+                if (pageName === 'profile') initProfile();
+                if (pageName === 'events') initEvents();
+            }
+        }
+
+        // ============================================
+        // AUTH
+        // ============================================
+        function showAuthForm(form) {
+            document.getElementById('authOptions').classList.toggle('hidden', form !== '');
+            document.getElementById('loginForm').classList.toggle('hidden', !form.includes('login'));
+            document.getElementById('signupForm').classList.toggle('hidden', form !== 'signup');
+
+            if (form.includes('login')) {
+                if (form === 'login-buyer') document.getElementById('loginRole').value = 'buyer';
+                else if (form === 'login-admin') document.getElementById('loginRole').value = 'admin';
+            }
+        }
+
+        function backToAuth() {
+            document.getElementById('authOptions').classList.remove('hidden');
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('signupForm').classList.add('hidden');
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        function doLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const role = document.getElementById('loginRole').value;
+
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            currentUser = { id: Date.now(), email, role, name: email.split('@')[0] };
+            if (role === 'seller') currentUser.region = 'Not Set';
+
+            updateUserUI();
+            loadData();
+
+            if (role === 'admin' || role === 'seller') {
+                goToPage('seller-dashboard');
+            } else {
+                goToPage('home');
+            }
+        }
+
+        function doSignup() {
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value.trim();
+            const role = document.querySelector('input[name="role"]:checked').value;
+            const region = document.getElementById('signupRegion').value;
+
+            if (!name || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            currentUser = { id: Date.now(), email, role, name, region: role === 'seller' ? region : undefined };
+            updateUserUI();
+            loadData();
+            goToPage('home');
+        }
+
+        function handleLogout() {
+            if (confirm('Logout?')) {
+                currentUser = null;
+                cart = [];
+                goToPage('login');
+            }
+        }
+
+        function updateUserUI() {
+            const userName = document.getElementById('userName');
+            const sellerBtn = document.getElementById('sellerDashBtn');
+            const adminNavBtn = document.getElementById('adminDashNavBtn');
+            const eventsNavBtn = document.getElementById('eventsNavBtn');
+            const addMeetingBtn = document.getElementById('addMeetingBtn');
+            const cartBadge = document.getElementById('cartBadge');
+
+            if (currentUser) {
+                userName.textContent = currentUser.email;
+                if (currentUser.role === 'admin') {
+                    if (sellerBtn) sellerBtn.style.display = 'none';
+                    if (adminNavBtn) {
+                        adminNavBtn.classList.remove('hidden');
+                        adminNavBtn.textContent = '<i class="fas fa-gear"></i> Admin';
+                    }
+                    if (eventsNavBtn) eventsNavBtn.classList.remove('hidden');
+                    if (addMeetingBtn) addMeetingBtn.classList.add('hidden');
+                    if (cartBadge) cartBadge.classList.add('hidden');
+                } else if (currentUser.role === 'seller') {
+                    if (sellerBtn) sellerBtn.style.display = 'block';
+                    if (adminNavBtn) {
+                        adminNavBtn.classList.remove('hidden');
+                        adminNavBtn.textContent = '<i class="fas fa-store"></i> Dashboard';
+                    }
+                    if (eventsNavBtn) eventsNavBtn.classList.remove('hidden');
+                    if (addMeetingBtn) addMeetingBtn.classList.remove('hidden');
+                    if (cartBadge) cartBadge.classList.remove('hidden');
+                } else {
+                    if (sellerBtn) sellerBtn.style.display = 'none';
+                    if (adminNavBtn) adminNavBtn.classList.add('hidden');
+                    if (eventsNavBtn) eventsNavBtn.classList.remove('hidden');
+                    if (addMeetingBtn) addMeetingBtn.classList.add('hidden');
+                    if (cartBadge) cartBadge.classList.remove('hidden');
+                }
+            }
+        }
+
+        function toggleRegionField() {
+            const field = document.getElementById('regionField');
+            const role = document.querySelector('input[name="role"]:checked').value;
+            field.classList.toggle('hidden', role !== 'seller');
+        }
+
+        // ============================================
+        // HOME PAGE
+        // ============================================
+        function initHome() {
+            displayProducts(products);
+        }
+
+        function displayProducts(items) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = items.length === 0 ? '<p class="col-span-full text-center text-gray-500">No products found</p>' : '';
+
+            items.forEach(product => {
+                const seller = sellers.find(s => s.id === product.sellerId);
+                const isFav = favorites.includes(product.id);
+
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden';
+                card.innerHTML = `
+                    <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                        ${product.image && product.image.includes('.')
+                        ? `<img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">`
+                        : `<div class="text-6xl text-gray-400"><i class="${product.icon}"></i></div>`}
+                    </div>
+                    <div class="p-4">
+                        <p class="text-xs text-green-600 font-semibold">${product.category}</p>
+                        <h3 class="font-bold text-gray-800 mb-1">${product.name}</h3>
+                        <p class="text-sm text-gray-600 mb-2">${seller?.name}</p>
+                        <div class="flex justify-between mb-3">
+                            <span class="text-lg font-bold text-green-600">₹${product.price}</span>
+                            <span class="text-xs">⭐ ${product.rating}</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="viewProduct(${product.id})" class="flex-1 bg-green-600 text-white py-2 rounded text-sm font-semibold hover:bg-green-700">
+                                View
+                            </button>
+                            <button onclick="toggleFav(${product.id})" class="px-3 py-2 bg-gray-200 rounded text-sm font-semibold hover:bg-gray-300">
+                                ${isFav ? '<i class="fas fa-heart" style="color: red;"></i>' : '<i class="far fa-heart"></i>'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+
+            let results = products.filter(p => p.name.toLowerCase().includes(query));
+            if (category) results = results.filter(p => p.category === category);
+
+            displayProducts(results);
+        }
+
+        function filterProducts() {
+            searchProducts();
+        }
+
+        function toggleFav(id) {
+            const idx = favorites.indexOf(id);
+            if (idx > -1) favorites.splice(idx, 1);
+            else favorites.push(id);
+            initHome();
+        }
+
+        // ============================================
+        // PRODUCT DETAIL
+        // ============================================
+        function viewProduct(id) {
+            currentProductId = id;
+            initProductDetail();
+            goToPage('product-detail');
+        }
+
+        function initProductDetail() {
+            const p = products.find(x => x.id === currentProductId);
+            const s = sellers.find(x => x.id === p.sellerId);
+            const isFav = favorites.includes(p.id);
+
+            const detailImgContainer = document.getElementById('detailImageContainer');
+            if (p.image && p.image.includes('.')) {
+                detailImgContainer.innerHTML = `<img src="${p.image}" alt="${p.name}" class="w-full max-h-96 object-contain rounded">`;
+            } else {
+                detailImgContainer.innerHTML = `<i class="${p.icon} text-9xl text-gray-400"></i>`;
+            }
+            document.getElementById('detailName').textContent = p.name;
+            document.getElementById('detailCategory').textContent = `📍 ${p.category}`;
+            document.getElementById('detailPrice').textContent = `₹${p.price}`;
+            document.getElementById('detailRating').textContent = `⭐ ${p.rating}`;
+            document.getElementById('detailReviews').textContent = `(${p.reviews} reviews)`;
+            document.getElementById('detailStock').textContent = p.quantity > 0 ? '✅ In Stock' : '❌ Out of Stock';
+            document.getElementById('detailDescription').textContent = p.description;
+            document.getElementById('detailSeller').textContent = s?.name;
+            document.getElementById('detailSellerRegion').textContent = `📍 ${s?.region}`;
+            document.getElementById('detailQty').value = 1;
+            document.getElementById('detailQty').max = p.quantity;
+
+            document.getElementById('heartBtn').innerHTML = isFav ? '<i class="fas fa-heart" style="color: red;"></i>' : '<i class="far fa-heart"></i>';
+            document.getElementById('heartBtn').onclick = () => toggleFav(p.id);
+
+            document.getElementById('addToCartBtn').onclick = () => {
+                addToCart(p.id, parseInt(document.getElementById('detailQty').value));
+                alert('Added to cart!');
+                updateCartBadge();
+            };
+        }
+
+        function increaseQty() {
+            const input = document.getElementById('detailQty');
+            if (parseInt(input.value) < parseInt(input.max)) input.value = parseInt(input.value) + 1;
+        }
+
+        function decreaseQty() {
+            const input = document.getElementById('detailQty');
+            if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
+        }
+
+        // ============================================
+        // CART
+        // ============================================
+        function addToCart(productId, quantity) {
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity += quantity;
+            } else {
+                const product = products.find(p => p.id === productId);
+                cart.push({ ...product, quantity });
+            }
+            updateCartBadge();
+            saveData();
+        }
+
+        function updateCartBadge() {
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
+        function initCart() {
+            const container = document.getElementById('cartItemsContainer');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-center py-12"><p class="text-3xl mb-4">🛒</p><p class="text-gray-600 mb-4">Cart is empty</p></div>';
+            } else {
+                container.innerHTML = cart.map((item, idx) => `
+                    <div class="flex gap-4 pb-4 mb-4 border-b">
+                        <div class="w-24 h-24 bg-gray-100 rounded overflow-hidden flex items-center justify-center shrink-0">
+                            ${item.image && item.image.includes('.')
+                        ? `<img src="${item.image}" class="w-full h-full object-cover">`
+                        : `<div class="text-5xl"><i class="${item.icon}"></i></div>`}
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg">${item.name}</h3>
+                            <p class="text-green-600 font-bold">₹${item.price}</p>
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                            <button onclick="removeFromCart(${idx})" class="text-red-600 hover:text-red-800">🗑️ Remove</button>
+                            <div class="flex items-center border border-gray-300 rounded">
+                                <button onclick="changeQty(${idx}, -1)" class="px-2 py-1">−</button>
+                                <span class="px-3 py-1 min-w-[40px] text-center">${item.quantity}</span>
+                                <button onclick="changeQty(${idx}, 1)" class="px-2 py-1">+</button>
+                            </div>
+                            <span class="font-bold">₹${item.price * item.quantity}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            updateCartCalc();
+        }
+
+        function removeFromCart(idx) {
+            cart.splice(idx, 1);
+            updateCartBadge();
+            initCart();
+            saveData();
+        }
+
+        function changeQty(idx, delta) {
+            cart[idx].quantity = Math.max(1, cart[idx].quantity + delta);
+            initCart();
+        }
+
+        function updateCartCalc() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = Math.round(total * 0.05);
+            document.getElementById('subtotal').textContent = `₹${total}`;
+            document.getElementById('tax').textContent = `₹${tax}`;
+            document.getElementById('cartTotal').textContent = `₹${total + tax}`;
+        }
+
+        // ============================================
+        // CHECKOUT
+        // ============================================
+        function initCheckout() {
+            const items = cart;
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            document.getElementById('checkoutItems').innerHTML = items.map(item => `
+                <div class="flex justify-between">
+                    <span>${item.name} x${item.quantity}</span>
+                    <span>₹${item.price * item.quantity}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('checkoutTotal').textContent = `₹${total}`;
+        }
+
+        function completeOrder() {
+            const name = document.getElementById('shipName').value.trim();
+            const email = document.getElementById('shipEmail').value.trim();
+            const phone = document.getElementById('shipPhone').value.trim();
+
+            if (!name || !email || !phone) {
+                alert('Please fill shipping details');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const orderId = `ORD-${Date.now()}`;
+
+            orders.push({
+                id: orderId,
+                items: [...cart],
+                total: total,
+                date: new Date().toISOString(),
+                status: 'Confirmed'
+            });
+
+            alert(`Order placed!\\n\\nOrder ID: ${orderId}\\nTotal: ₹${total}`);
+            cart = [];
+            updateCartBadge();
+            goToPage('profile');
+            saveData();
+        }
+
+        // ============================================
+        // SELLER
+        // ============================================
+        function initSellerDash() {
+            // Seller view: their products only
+            const myProducts = products.filter(p => p.sellerId === currentUser.id);
+            document.getElementById('dashTotalProducts').textContent = myProducts.length;
+            document.getElementById('dashTotalSales').textContent = `₹${myProducts.reduce((sum, p) => sum + (p.price * 2), 0)}`;
+            document.getElementById('dashMeetings').textContent = meetings.filter(m => m.organizer === currentUser.email).length;
+
+            const prodList = document.getElementById('dashProductsList');
+            prodList.innerHTML = myProducts.length === 0 ? '<div class="p-6 text-center text-gray-500">No products yet</div>' : '';
+
+            myProducts.forEach(product => {
+                const div = document.createElement('div');
+                div.className = 'p-6 flex items-center justify-between border-b';
+                div.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <i class="${product.icon} text-4xl"></i>
+                        <div>
+                            <h4 class="font-bold">${product.name}</h4>
+                            <p class="text-sm text-gray-600">${product.category} • ₹${product.price}</p>
+                            <p class="text-xs text-gray-500">Stock: ${product.quantity}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="editProd(${product.id})" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"><i class="fas fa-pen"></i> Edit</button>
+                        <button onclick="deleteProd(${product.id})" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                `;
+                prodList.appendChild(div);
+            });
+        }
+
+        function initAdminDash() {
+            // Admin view: all products, events, and meetings
+            document.getElementById('adminDashTotalProducts').textContent = products.length;
+            document.getElementById('adminDashActiveSellers').textContent = new Set(products.map(p => p.sellerId)).size;
+            document.getElementById('adminDashMeetings').textContent = meetings.length;
+            document.getElementById('adminDashTotalEvents').textContent = events.length;
+
+            // Products list
+            const prodList = document.getElementById('adminDashProductsList');
+            prodList.innerHTML = products.length === 0 ? '<div class="p-6 text-center text-gray-500">No products</div>' : '';
+
+            products.forEach(product => {
+                const seller = sellers.find(s => s.id === product.sellerId);
+                const div = document.createElement('div');
+                div.className = 'p-6 flex items-center justify-between border-b hover:bg-gray-50';
+                div.innerHTML = `
+                    <div class="flex items-center gap-4 flex-1">
+                        <i class="${product.icon} text-4xl"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-800">${product.name}</h4>
+                            <p class="text-sm text-gray-600">Seller: ${seller?.name || 'Unknown'} • ${product.category}</p>
+                            <p class="text-xs text-gray-500">₹${product.price} • Stock: ${product.quantity} • Rating: <i class="fas fa-star"></i> ${product.rating}</p>
+                        </div>
+                    </div>
+                    <button onclick="adminDeleteProduct(${product.id})" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 font-semibold">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                `;
+                prodList.appendChild(div);
+            });
+
+            // Events list
+            const eventsList = document.getElementById('adminDashEventsList');
+            eventsList.innerHTML = events.length === 0 ? '<div class="p-6 text-center text-gray-500">No events</div>' : '';
+
+            events.forEach(event => {
+                const div = document.createElement('div');
+                div.className = 'p-6 flex items-center justify-between border-b hover:bg-gray-50';
+                div.innerHTML = `
+                    <div class="flex items-center gap-4 flex-1">
+                        <i class="${event.icon} text-4xl"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-800">${event.title}</h4>
+                            <p class="text-sm text-gray-600">${event.date} • ${event.location}</p>
+                            <p class="text-xs text-gray-500">Type: ${event.type} • Attendees: ${event.attendees}</p>
+                        </div>
+                    </div>
+                    <button onclick="adminDeleteEvent(${event.id})" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 font-semibold">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                `;
+                eventsList.appendChild(div);
+            });
+
+            // Meetings list
+            const meetingsList = document.getElementById('adminDashMeetingsList');
+            meetingsList.innerHTML = meetings.length === 0 ? '<div class="p-6 text-center text-gray-500">No meetings</div>' : '';
+
+            meetings.forEach(meeting => {
+                const div = document.createElement('div');
+                div.className = 'p-6 flex items-center justify-between border-b hover:bg-gray-50';
+                div.innerHTML = `
+                    <div class="flex-1">
+                        <h4 class="font-bold text-gray-800">${meeting.title}</h4>
+                        <p class="text-sm text-gray-600">${meeting.region} • ${meeting.date} at ${meeting.time}</p>
+                        <p class="text-xs text-gray-500">Location: ${meeting.location} • Organizer: ${meeting.organizer} • Attendees: ${meeting.attendees}/${meeting.maxCapacity}</p>
+                    </div>
+                    <button onclick="adminDeleteMeeting(${meeting.id})" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 font-semibold">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                `;
+                meetingsList.appendChild(div);
+            });
+        }
+
+        function initUnifiedDash() {
+            const isAdmin = currentUser.role === 'admin';
+            const addEventBtn = document.getElementById('addEventBtnUnified');
+            const adminStatDiv = document.getElementById('adminStatDiv');
+            const eventStatDiv = document.getElementById('eventStatDiv');
+            const adminEventsSection = document.getElementById('adminEventsSection');
+            const productsSubtitle = document.getElementById('productsSubtitle');
+
+            // Show/hide admin-only elements
+            if (isAdmin) {
+                addEventBtn.classList.remove('hidden');
+                adminStatDiv.style.display = 'block';
+                eventStatDiv.style.display = 'block';
+                adminEventsSection.style.display = 'block';
+                productsSubtitle.textContent = 'All Products (Marketplace Management)';
+            } else {
+                addEventBtn.classList.add('hidden');
+                adminStatDiv.style.display = 'none';
+                eventStatDiv.style.display = 'none';
+                adminEventsSection.style.display = 'none';
+                productsSubtitle.textContent = 'Your Products';
+            }
+
+            // Products statistics and list
+            if (isAdmin) {
+                // Admin view: all products
+                document.getElementById('dashTotalProducts').textContent = products.length;
+                document.getElementById('dashActiveSellers').textContent = new Set(products.map(p => p.sellerId)).size;
+                document.getElementById('dashMeetings').textContent = meetings.length;
+                document.getElementById('dashTotalEvents').textContent = events.length;
+
+                const prodList = document.getElementById('dashProductsList');
+                prodList.innerHTML = products.length === 0 ? '<div class="p-6 text-center text-gray-500">No products</div>' : '';
+
+                products.forEach(product => {
+                    const seller = sellers.find(s => s.id === product.sellerId);
+                    const div = document.createElement('div');
+                    div.className = 'p-6 flex items-center justify-between border-b hover:bg-gray-50';
+                    div.innerHTML = `
+                        <div class="flex items-center gap-4 flex-1">
+                            <div class="h-12 w-12 bg-gray-100 rounded flex items-center justify-center overflow-hidden shrink-0">
+                                ${product.image && product.image.includes('.')
+                            ? `<img src="${product.image}" class="w-full h-full object-cover">`
+                            : `<i class="${product.icon} text-2xl text-gray-400"></i>`}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">${product.name}</h4>
+                                <p class="text-sm text-gray-600">Seller: ${seller?.name || 'Unknown'} • ${product.category}</p>
+                                <p class="text-xs text-gray-500">₹${product.price} • Stock: ${product.quantity} • Rating: <i class="fas fa-star"></i> ${product.rating}</p>
+                            </div>
+                        </div>
+                        <button onclick="adminDeleteProduct(${product.id})" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 font-semibold">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    `;
+                    prodList.appendChild(div);
+                });
+
+                // Events list
+                const eventsList = document.getElementById('dashEventsList');
+                eventsList.innerHTML = events.length === 0 ? '<div class="p-6 text-center text-gray-500">No events</div>' : '';
+
+                events.forEach(event => {
+                    const div = document.createElement('div');
+                    div.className = 'p-6 flex items-center justify-between border-b hover:bg-gray-50';
+                    div.innerHTML = `
+                        <div class="flex items-center gap-4 flex-1">
+                            <i class="${event.icon} text-4xl"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800">${event.title}</h4>
+                                <p class="text-sm text-gray-600">${event.date} • ${event.location}</p>
+                                <p class="text-xs text-gray-500">Type: ${event.type} • Attendees: ${event.attendees}</p>
+                            </div>
+                        </div>
+                        <button onclick="adminDeleteEvent(${event.id})" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 font-semibold">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    `;
+                    eventsList.appendChild(div);
+                });
+            } else {
+                // Seller view: their products only
+                const myProducts = products.filter(p => p.sellerId === currentUser.id);
+                document.getElementById('dashTotalProducts').textContent = myProducts.length;
+                document.getElementById('dashTotalSales').textContent = `₹${myProducts.reduce((sum, p) => sum + (p.price * 2), 0)}`;
+                document.getElementById('dashMeetings').textContent = meetings.filter(m => m.organizer === currentUser.email).length;
+
+                const prodList = document.getElementById('dashProductsList');
+                prodList.innerHTML = myProducts.length === 0 ? '<div class="p-6 text-center text-gray-500">No products yet</div>' : '';
+
+                myProducts.forEach(product => {
+                    const div = document.createElement('div');
+                    div.className = 'p-6 flex items-center justify-between border-b';
+                    div.innerHTML = `
+                        <div class="flex items-center gap-4">
+                            <div class="h-12 w-12 bg-gray-100 rounded flex items-center justify-center overflow-hidden shrink-0">
+                                ${product.image && product.image.includes('.')
+                            ? `<img src="${product.image}" class="w-full h-full object-cover">`
+                            : `<i class="${product.icon} text-2xl text-gray-400"></i>`}
+                            </div>
+                            <div>
+                                <h4 class="font-bold">${product.name}</h4>
+                                <p class="text-sm text-gray-600">${product.category} • ₹${product.price}</p>
+                                <p class="text-xs text-gray-500">Stock: ${product.quantity}</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="editProd(${product.id})" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">✏️ Edit</button>
+                            <button onclick="deleteProd(${product.id})" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    `;
+                    prodList.appendChild(div);
+                });
+            }
+        }
+
+        function editProd(id) {
+            const p = products.find(x => x.id === id);
+            editingProductId = id;
+
+            document.getElementById('productName').value = p.name;
+            document.getElementById('productCategory').value = p.category;
+            document.getElementById('productPrice').value = p.price;
+            document.getElementById('productQuantity').value = p.quantity;
+            document.getElementById('productImage').value = p.image;
+            document.getElementById('productDescription').value = p.description;
+
+            goToPage('add-product');
+        }
+
+        function deleteProd(id) {
+            if (confirm('Delete this product?')) {
+                const idx = products.findIndex(p => p.id === id);
+                products.splice(idx, 1);
+                alert('Product deleted!');
+                saveData();
+                initUnifiedDash();
+            }
+        }
+
+        function saveProduct() {
+            const name = document.getElementById('productName').value.trim();
+            const category = document.getElementById('productCategory').value;
+            const price = parseInt(document.getElementById('productPrice').value);
+            const quantity = parseInt(document.getElementById('productQuantity').value);
+            const image = document.getElementById('productImage').value || '📦';
+            const description = document.getElementById('productDescription').value.trim();
+
+            if (!name || !category || !price || !quantity || !description) {
+                alert('Fill all fields');
+                return;
+            }
+
+            if (editingProductId) {
+                const p = products.find(x => x.id === editingProductId);
+                p.name = name;
+                p.category = category;
+                p.price = price;
+                p.quantity = quantity;
+                p.image = image;
+                p.description = description;
+                alert('Product updated!');
+                editingProductId = null;
+            } else {
+                products.push({
+                    id: Math.max(...products.map(p => p.id), 0) + 1,
+                    sellerId: currentUser.id,
+                    name, category, price, quantity, image, description,
+                    rating: 5, reviews: 0
+                });
+                alert('Product added successfully!');
+            }
+
+            // Clear inputs
+            document.getElementById('productName').value = '';
+            document.getElementById('productCategory').value = '';
+            document.getElementById('productPrice').value = '';
+            document.getElementById('productQuantity').value = '';
+            document.getElementById('productImage').value = '';
+            document.getElementById('productDescription').value = '';
+
+            saveData();
+            goToPage('seller-dashboard');
+        }
+
+        function adminDeleteProduct(id) {
+            if (confirm('Remove this product from marketplace?')) {
+                const idx = products.findIndex(p => p.id === id);
+                products.splice(idx, 1);
+                alert('Product removed!');
+                initUnifiedDash();
+                saveData();
+            }
+        }
+
+        function adminDeleteEvent(id) {
+            if (confirm('Delete this event?')) {
+                const idx = events.findIndex(e => e.id === id);
+                events.splice(idx, 1);
+                alert('Event deleted!');
+                initUnifiedDash();
+                saveData();
+            }
+        }
+
+        // ============================================
+        // MEETINGS
+        // ============================================
+        function initMeetings() {
+            displayMeetings(meetings);
+        }
+
+        function displayMeetings(items) {
+            const grid = document.getElementById('meetingsGrid');
+            grid.innerHTML = items.map(m => `
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-lg mb-3">${m.title}</h3>
+                    <div class="space-y-2 text-sm mb-4">
+                        <p><strong><i class="fas fa-location-dot"></i> Region:</strong> ${m.region}</p>
+                        <p><strong><i class="fas fa-calendar"></i> Date:</strong> ${m.date}</p>
+                        <p><strong><i class="fas fa-clock"></i> Time:</strong> ${m.time}</p>
+                        <p><strong><i class="fas fa-location-dot"></i> Location:</strong> ${m.location}</p>
+                        <p><strong><i class="fas fa-user"></i> Organizer:</strong> ${m.organizer}</p>
+                        <p><strong><i class="fas fa-people-group"></i> Attendees:</strong> ${m.attendees}/${m.maxCapacity}</p>
+                    </div>
+                    <p class="text-gray-700 text-sm mb-4">${m.description}</p>
+                    <button onclick="registerMeet(${m.id})" class="w-full bg-green-600 text-white py-2 rounded font-semibold hover:bg-green-700">
+                        Register
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function filterMeetings() {
+            const region = document.getElementById('regionFilter').value;
+            const filtered = region ? meetings.filter(m => m.region === region) : meetings;
+            displayMeetings(filtered);
+        }
+
+        function registerMeet(id) {
+            const m = meetings.find(x => x.id === id);
+            if (m.attendees < m.maxCapacity) {
+                m.attendees++;
+                alert('Registered!');
+                initMeetings();
+            } else {
+                alert('Meeting is full');
+            }
+        }
+
+        function saveMeeting() {
+            const title = document.getElementById('meetingTitle').value.trim();
+            const region = document.getElementById('meetingRegion').value;
+            const capacity = parseInt(document.getElementById('meetingCapacity').value);
+            const date = document.getElementById('meetingDate').value;
+            const time = document.getElementById('meetingTime').value;
+            const location = document.getElementById('meetingLocation').value.trim();
+            const description = document.getElementById('meetingDescription').value.trim();
+
+            if (!title || !region || !capacity || !date || !time || !location || !description) {
+                alert('Fill all fields');
+                return;
+            }
+
+            meetings.push({
+                id: Math.max(...meetings.map(m => m.id), 0) + 1,
+                region, title, date, time, location, description,
+                organizer: currentUser.name || currentUser.email,
+                attendees: 1,
+                maxCapacity: capacity
+            });
+
+            alert('Meeting scheduled!');
+            document.getElementById('meetingTitle').value = '';
+            goToPage('meetings');
+        }
+
+        // ============================================
+        // PROFILE
+        // ============================================
+        function initProfile() {
+            document.getElementById('profileName').textContent = currentUser.name;
+            document.getElementById('profileEmail').textContent = currentUser.email;
+            document.getElementById('profileRole').textContent = currentUser.role === 'seller' ? '👩‍🏭 Seller' : '👤 Buyer';
+
+            const regionDiv = document.getElementById('profileRegionDiv');
+            if (currentUser.role === 'seller') {
+                regionDiv.classList.remove('hidden');
+                document.getElementById('profileRegion').textContent = currentUser.region;
+            } else {
+                regionDiv.classList.add('hidden');
+            }
+
+            const list = document.getElementById('orderHistoryList');
+            const myOrders = orders.filter(o => o.buyer === currentUser.email);
+            list.innerHTML = myOrders.length === 0 ? '<p class="text-gray-600">No orders</p>' :
+                myOrders.map(o => `
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="font-bold">${o.id}</span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded text-sm">${o.status}</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">Items: ${o.items.length} • Total: ₹${o.total}</p>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // EVENTS
+        // ============================================
+        function initEvents() {
+            const grid = document.getElementById('eventsGrid');
+            grid.innerHTML = events.map(e => `
+                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
+                    <div class="text-6xl mb-3"><i class="${e.icon}"></i></div>
+                    <h3 class="text-lg font-bold mb-2 text-gray-800">${e.title}</h3>
+                    <div class="space-y-2 text-sm text-gray-600 mb-4">
+                        <p><strong><i class="fas fa-calendar"></i> Date:</strong> ${e.date}</p>
+                        <p><strong><i class="fas fa-location-dot"></i> Location:</strong> ${e.location}</p>
+                        <p><strong><i class="fas fa-tag"></i> Type:</strong> ${e.type}</p>
+                        <p><strong><i class="fas fa-people-group"></i> Attendees:</strong> ${e.attendees}</p>
+                    </div>
+                    <p class="text-gray-700 text-sm mb-4">${e.description}</p>
+                    <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 rounded font-semibold hover:shadow-lg transition">
+                        Learn More
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // ADMIN DASHBOARD
+        // ============================================
+        function saveEvent() {
+            const title = document.getElementById('eventTitle').value.trim();
+            const date = document.getElementById('eventDate').value;
+            const attendees = parseInt(document.getElementById('eventAttendees').value);
+            const location = document.getElementById('eventLocation').value.trim();
+            const type = document.getElementById('eventType').value;
+            const description = document.getElementById('eventDescription').value.trim();
+
+            if (!title || !date || !attendees || !location || !type || !description) {
+                alert('Fill all fields');
+                return;
+            }
+
+            const typeEmoji = {
+                'Workshop': '📚',
+                'Training': '🎓',
+                'Seminar': '🎤',
+                'Fair': '🎪',
+                'Campaign': '📢',
+                'Social Meet': '👥'
+            };
+
+            events.push({
+                id: Math.max(...events.map(e => e.id), 0) + 1,
+                title, date, attendees, location, type, description,
+                image: typeEmoji[type] || '🎉'
+            });
+
+            alert('Event added!');
+            document.getElementById('eventTitle').value = '';
+            goToPage('admin-dashboard');
+            saveData();
+        }
+
+        // ============================================
+        // STORAGE
+        // ============================================
+        function saveData() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            localStorage.setItem('orders', JSON.stringify(orders));
+            localStorage.setItem('products', JSON.stringify(products));
+            localStorage.setItem('events', JSON.stringify(events));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem('cart');
+            if (saved) cart = JSON.parse(saved);
+
+            const savFav = localStorage.getItem('favorites');
+            if (savFav) favorites = JSON.parse(savFav);
+
+            const savOrd = localStorage.getItem('orders');
+            if (savOrd) orders = JSON.parse(savOrd);
+
+            const savProd = localStorage.getItem('products');
+            if (savProd) products = JSON.parse(savProd);
+
+            const savEv = localStorage.getItem('events');
+            if (savEv) events = JSON.parse(savEv);
+
+            updateCartBadge();
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function () {
+            loadData();
+            goToPage('login');
+        });
+    </script>
+</body>
+
+</html>
