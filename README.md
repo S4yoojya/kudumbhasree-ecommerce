@@ -107,9 +107,6 @@ npx http-server -p 8000
 ![Screenshot4](./public/screenshot-cart.png)
 *Shopping cart with order summary and checkout functionality*
 
-![Screenshot5](./public/screenshot-product-detail.png)
-*Product detail page showing seller information and product specifications*
-
 #### Diagrams
 
 **Application Workflow:**
