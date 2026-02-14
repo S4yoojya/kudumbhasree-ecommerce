@@ -13,7 +13,7 @@
 - Member 2: [Nandana Sathyan] - [Kannur University Campus]
 
 ### Hosted Project Link
-[Your hosted link here - Deploy on GitHub Pages, Netlify, or Vercel]
+[https://kudumbhasree-ecommerce.vercel.app/]
 
 ### Project Description
 Kudumbhasree Ecommerce is a women empowerment e-commerce platform designed to help women entrepreneurs in Kerala sell their handmade and local products online. The platform facilitates product management, online shopping, regional meeting coordination, and community building for Kudumbhasree members across Kerala.
