@@ -1,5 +1,6 @@
 <p align="center">
-  <img src="./img.png" alt="Project Banner" width="100%">
+<img width="1920" height="1080" alt="Screenshot 2026-02-14 152016" src="https://github.com/user-attachments/assets/9c852b50-8290-4777-8128-aaf417af13bb" />
+
 </p>
 
 # [kudu-commerce] 🎯
